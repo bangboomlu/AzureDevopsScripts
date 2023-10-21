@@ -1,0 +1,15 @@
+parameters:
+  - name: targetOptions
+    type: object
+  - name: stageOptions
+    type: object
+stages:
+  - stage: ${{ parameters.targetOptions.name }}_${{ parameters.targetOptions.platform }}_integtest
+    displayName: 'Integration Test ${{ parameters.targetOptions.name }} ${{ parameters.targetOptions.platform }}'
+    dependsOn: ${{ parameters.targetOptions.name }}_${{ parameters.targetOptions.platform }}_buildStage
+    jobs:
+      - job: integtest_${{ parameters.targetOptions.name }}
+        displayName: 'Integration Test ${{ parameters.targetOptions.name }}'
+        steps:
+          - checkout: self
+          - script: echo "Here could be a Integration Test Step"

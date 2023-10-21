@@ -1,0 +1,12 @@
+parameters:
+  - name: buildTargets
+    type: object
+  - name: stages
+    type: object
+stages:
+  - ${{ each target in parameters.buildTargets }}:
+      - ${{ each dynamicStage in parameters.stages }}:
+          - template: ${{ dynamicStage.stageTemplate }}
+            parameters:
+              targetOptions: ${{ target.targetOptions }}
+              stageOptions: ${{ dynamicStage.stageOptions }}

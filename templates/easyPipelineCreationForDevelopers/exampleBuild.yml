@@ -1,0 +1,15 @@
+parameters:
+  - name: targetOptions
+    type: object
+  - name: stageOptions
+    type: object
+stages:
+  - stage: ${{ parameters.targetOptions.name }}_${{ parameters.targetOptions.platform }}_buildStage
+    displayName: 'Build ${{ parameters.targetOptions.name }}'
+    dependsOn: []
+    jobs:
+      - job: buildJob_${{ parameters.targetOptions.name }}
+        displayName: 'Build ${{ parameters.targetOptions.name }}'
+        steps:
+          - checkout: self
+          - script: echo "Here could be a Build Step"

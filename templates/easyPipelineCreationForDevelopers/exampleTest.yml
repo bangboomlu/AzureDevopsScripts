@@ -1,0 +1,15 @@
+parameters:
+  - name: targetOptions
+    type: object
+  - name: stageOptions
+    type: object
+stages:
+  - stage: ${{ parameters.targetOptions.name }}_sw_test
+    displayName: 'Software Test ${{ parameters.targetOptions.name }}'
+    dependsOn: ${{ parameters.targetOptions.name }}_${{ parameters.targetOptions.platform }}_buildStage
+    jobs:
+      - job: sw_test_${{ parameters.targetOptions.name }}
+        displayName: 'Software Test ${{ parameters.targetOptions.name }}'
+        steps:
+          - checkout: self
+          - script: echo "Here could be a Test Step"

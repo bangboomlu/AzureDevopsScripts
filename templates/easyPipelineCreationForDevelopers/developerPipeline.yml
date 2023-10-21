@@ -1,0 +1,28 @@
+resources:
+  repositories:
+    - repository: Templates
+      type: git
+      name: OrganizationalTemplateRepo
+      ref: master
+extends:
+  template: "basePipeline.yml@Templates" # Base Template to easily create stages
+  parameters:
+    buildTargets: # list of how targets for which you want to runn all stages below
+      - buildTarget:
+        targetOptions:
+          name: "MyCoolProduct"
+          platform: "Linux"
+      - buildTarget:
+        targetOptions:
+          name: "MyCoolProduct"
+          platform: "Windows"
+    stages: # list of everything you want to do
+      - stage:
+        sTemplate: "exampleBuild.yml@Templates"
+      - stage:
+        sTemplate: "exampleTest.yml@Templates"
+        stageOptions:
+          skipUnittests: "true"
+      - stage:
+        sTemplate: "exampleIntegrationTest.yml@Templates"
+        stageOptions:
